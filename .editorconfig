@@ -1,0 +1,9 @@
+[*]
+charset = utf-8
+
+[*.cs]
+# CS8618: Non-nullable field is uninitialized. Consider declaring as nullable.
+dotnet_diagnostic.CS8618.severity = suggestion
+
+# CS8605: Unboxing a possibly null value.
+dotnet_diagnostic.CS8605.severity = none
