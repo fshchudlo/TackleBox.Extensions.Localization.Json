@@ -1,0 +1,5 @@
+{
+  "ValueMustEqualOrGreater": "Value of \u0027{0}\u0027 must be greater or equal than \u0027{1}\u0027",
+  "FieldName": "Field Name",
+  "FieldValue": "Field Value"
+}
