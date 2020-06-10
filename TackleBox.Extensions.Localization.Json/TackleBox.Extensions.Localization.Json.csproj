@@ -5,7 +5,7 @@
     <LangVersion>Latest</LangVersion>
     <Nullable>enable</Nullable>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
-    <PackageVersion>1.0.0</PackageVersion>
+    <Version>1.0.0</Version>
     <Authors>Fedor Shchudlo</Authors>
     <Description>Alternative implementation of .NET Core IStringLocalizer that uses JSON as resource files</Description>
     <RepositoryUrl>https://github.com/fshchudlo/TackleBox.Extensions.Localization.Json</RepositoryUrl>
