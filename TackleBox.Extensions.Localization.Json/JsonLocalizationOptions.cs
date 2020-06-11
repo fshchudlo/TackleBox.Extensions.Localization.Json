@@ -43,23 +43,49 @@ namespace TackleBox.Extensions.Localization.Json
         /// </summary>
         /// <param name="baseUrl">Base address of the server (typically is a CDN) to load json resource files</param>
         /// <param name="resourceUrlBuilder">Allows to specify custom way to build url to resource file</param>
-        public JsonLocalizationOptions FromHttp(string baseUrl,
-            Func<JsonLocalizationOptions, string, CultureInfo, string>? resourceUrlBuilder = null)
+        public JsonLocalizationOptions FromHttp(string baseUrl, Func<JsonLocalizationOptions, string, CultureInfo, string> resourceUrlBuilder)
         {
             ResourceStorageBaseUrl = baseUrl;
-            ResourcePathBuilder = resourceUrlBuilder ?? ((options, resourceFileName, culture) =>
+            ResourcePathBuilder = resourceUrlBuilder;
+            return this;
+        }
+
+        /// <summary>
+        /// Configures IStringLocalizer to load json files via http requests from the specified baseUrl
+        /// </summary>
+        /// <param name="baseUrl">Base address of the server (typically is a CDN) to load json resource files</param>
+        /// <param name="pathTransformation">Specifies whether file name and culture name should be lower-cased or upper-cased</param>
+        public JsonLocalizationOptions FromHttp(string baseUrl, PathTransformation pathTransformation = PathTransformation.None)
+        {
+            ResourceStorageBaseUrl = baseUrl;
+            ResourcePathBuilder = (options, resourceFileName, culture) =>
             {
                 var normalizedBaseUrl = options.ResourceStorageBaseUrl!.ToString().EndsWith("/")
                     ? options.ResourceStorageBaseUrl.ToString()
                     : $"{options.ResourceStorageBaseUrl}/";
                 
                 var filePath = resourceFileName == string.Empty
-                    ? $"{culture.Name.ToLower()}.json"
-                    : $"{culture.Name.ToLower()}/{resourceFileName.ToLower()}.json";
+                    ? $"{culture.Name}.json"
+                    : $"{culture.Name}/{resourceFileName}.json";
                 
-                return $"{normalizedBaseUrl}{filePath}";
-            });
+                return $"{normalizedBaseUrl}{NormalizePath(filePath, pathTransformation)}";
+            };
             return this;
+        }
+
+        private string NormalizePath(string filePath, PathTransformation pathTransformation)
+        {
+            switch (pathTransformation)
+            {
+                case PathTransformation.None:
+                    return filePath;
+                case PathTransformation.LowerCase:
+                    return filePath.ToLower();
+                case PathTransformation.UpperCase:
+                    return filePath.ToUpper();
+                default:
+                    throw new ArgumentOutOfRangeException(nameof(pathTransformation), pathTransformation, null);
+            }
         }
 
         /// <summary>
@@ -67,8 +93,7 @@ namespace TackleBox.Extensions.Localization.Json
         /// </summary>
         /// <param name="basePath">Base directory to load json resource files</param>
         /// <param name="resourcePathBuilder">Allows to specify custom way to build path to resource file</param>
-        public JsonLocalizationOptions FromDirectory(string basePath,
-            Func<JsonLocalizationOptions, string, CultureInfo, string>? resourcePathBuilder = null)
+        public JsonLocalizationOptions FromDirectory(string basePath, Func<JsonLocalizationOptions, string, CultureInfo, string>? resourcePathBuilder = null)
         {
             ResourceStorageBaseDirectory = basePath;
             ResourcePathBuilder = resourcePathBuilder ?? ((options, resourceFileName, culture) =>
