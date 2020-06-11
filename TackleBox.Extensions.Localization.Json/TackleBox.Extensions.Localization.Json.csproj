@@ -5,7 +5,7 @@
     <LangVersion>Latest</LangVersion>
     <Nullable>enable</Nullable>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
-    <Version>1.0.2</Version>
+    <Version>1.0.3</Version>
     <Authors>Fedor Shchudlo</Authors>
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
     <Description>Alternative implementation of .NET Core IStringLocalizer that uses JSON as resource files</Description>

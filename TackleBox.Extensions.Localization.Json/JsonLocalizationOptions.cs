@@ -54,8 +54,8 @@ namespace TackleBox.Extensions.Localization.Json
                     : $"{options.ResourceStorageBaseUrl}/";
                 
                 var filePath = resourceFileName == string.Empty
-                    ? $"{culture.Name}.json"
-                    : $"{culture.Name}/{resourceFileName}.json";
+                    ? $"{culture.Name.ToLower()}.json"
+                    : $"{culture.Name.ToLower()}/{resourceFileName.ToLower()}.json";
                 
                 return $"{normalizedBaseUrl}{filePath}";
             });
