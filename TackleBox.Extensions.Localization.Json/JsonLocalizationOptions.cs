@@ -52,11 +52,12 @@ namespace TackleBox.Extensions.Localization.Json
                 var normalizedBaseUrl = options.ResourceStorageBaseUrl!.ToString().EndsWith("/")
                     ? options.ResourceStorageBaseUrl.ToString()
                     : $"{options.ResourceStorageBaseUrl}/";
+                
                 var filePath = resourceFileName == string.Empty
                     ? $"{culture.Name}.json"
                     : $"{culture.Name}/{resourceFileName}.json";
                 
-                return $"{normalizedBaseUrl}/{filePath}";
+                return $"{normalizedBaseUrl}{filePath}";
             });
             return this;
         }
